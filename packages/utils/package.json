@@ -1,0 +1,26 @@
+{
+  "name": "@library/utils",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "johkli <johannes.klint@etraveligroup.com>",
+  "homepage": "",
+  "license": "ISC",
+  "main": "dist/index.js",
+  "source": "lib/index.js",          
+  "module": "dist/index.module.js",  
+  "unpkg": "dist/index.umd.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "build": "microbundle",        
+    "dev": "microbundle watch"
+  },
+  "devDependencies": {
+    "microbundle": "^0.12.3"
+  }
+}

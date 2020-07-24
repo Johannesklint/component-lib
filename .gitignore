@@ -1,0 +1,9 @@
+.cache
+.eslintcache
+build
+dist
+node_modules
+.next
+.idea/
+.vscode
+
