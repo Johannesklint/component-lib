@@ -6,8 +6,8 @@
   "homepage": "",
   "license": "ISC",
   "main": "dist/index.js",
-  "source": "lib/index.js",          
-  "module": "dist/index.module.js",  
+  "source": "lib/index.js",
+  "module": "dist/index.module.js",
   "unpkg": "dist/index.umd.js",
   "directories": {
     "lib": "lib",
@@ -17,7 +17,7 @@
     "lib"
   ],
   "scripts": {
-    "build": "microbundle",        
+    "build": "microbundle",
     "dev": "microbundle watch"
   },
   "devDependencies": {
