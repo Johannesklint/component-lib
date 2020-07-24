@@ -1,6 +1,5 @@
 const React = require('react')
-
-module.exports = Input
+const { isFunction } = require('@library/utils')
 
 function Input(props) {
   const [value, setValue] = React.useState('')
@@ -14,3 +13,5 @@ function Input(props) {
 
   return <input {...props} value={value} onChange={onChange} />
 }
+
+module.exports = Input
