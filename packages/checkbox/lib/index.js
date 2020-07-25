@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 const React = require('react')
 
 function Checkbox({ id, name, value, checked, onChange, children }) {

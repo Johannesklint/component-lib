@@ -1,3 +1,7 @@
+/**
+ * @param {function} value
+ * @returns {Boolean}
+ */
 function isFunction(value) {
   return typeof value === 'function'
 }
