@@ -1,77 +1,47 @@
-/* eslint-disable indent */
 const React = require('react')
 
 function Radio({ id, name, value, checked, onChange, children }) {
+  const ref = React.useRef()
   return (
-    <React.Fragment>
-      <label htmlFor={id}>
-        <input
-          type="radio"
-          id={id}
-          name={name}
-          value={value}
-          checked={checked}
-          onChange={onChange}
-        />
-        {children}
-      </label>
-    </React.Fragment>
+    <label htmlFor={id}>
+      <input
+        ref={ref}
+        type="radio"
+        id={id}
+        name={name}
+        value={value}
+        checked={checked}
+        onChange={onChange(ref)}
+      />
+      {children}
+    </label>
   )
 }
 
-function RadioGroup({ className, legend, children }) {
+function RadioGroup({ className, children }) {
   const initState = {
-    ...React.Children.map(children, (child) => {
-      return {
-        [child.props.name]: {
-          id: child.props.id,
-          value: child.props.value,
-          checked: child.props.checked || false,
-        },
-      }
-    }).reduce(
-      (acc, item) => ({
-        ...acc,
-        ...item,
-      }),
-      {}
-    ),
+    ...React.Children.map(children, (child) => ({
+      [child.props.name]: {
+        checked: false,
+      },
+    })).reduce((acc, item) => ({ ...acc, ...item }), {}),
   }
-
-  function fixState(oldState) {
-    return Object.entries(oldState).reduce(
-      (acc, [key, value]) => ({
-        ...acc,
-        [key]: {
-          ...value,
-          checked: false,
-        },
-      }),
-      {}
-    )
-  }
-
-  function reducer(state, action) {
-    const { payload, type } = action
-    switch (type) {
-      case 'CHANGE':
-        return {
-          ...fixState(state, payload),
-          [payload.name]: {
-            ...state[payload.name],
-            checked: payload.checked,
-          },
-        }
-      default:
-        throw new Error()
-    }
-  }
-  // const [state, dispatch] = React.useReducer(reducer, initState)
+  const [state, setState] = React.useState(initState)
 
   return (
     <fieldset className={className}>
-      {legend && legend}
-      {React.Children.map(children, (child) => React.cloneElement(child))}
+      {React.Children.map(children, (child) => {
+        const { name } = child.props
+        return React.cloneElement(child, {
+          checked: name === state[name] && state[name].checked,
+          key: name,
+          name: name,
+          id: name,
+          onChange: (ref) => () => {
+            setState({ [ref.current.name]: ref.current.name })
+          },
+        })
+      })}
     </fieldset>
   )
 }
