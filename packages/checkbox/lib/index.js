@@ -1,16 +1,17 @@
-/* eslint-disable indent */
 const React = require('react')
 
 function Checkbox({ id, name, value, checked, onChange, children }) {
+  const ref = React.useRef()
   return (
     <label htmlFor={id}>
       <input
         type="checkbox"
         id={id}
+        ref={ref}
         name={name}
         value={value}
         checked={checked}
-        onChange={onChange}
+        onChange={onChange(ref)}
       />
       {children}
     </label>
@@ -19,67 +20,24 @@ function Checkbox({ id, name, value, checked, onChange, children }) {
 
 function CheckboxGroup({ className, legend, children }) {
   const initState = {
-    ...React.Children.map(children, (child) => {
-      return {
-        [child.props.name]: {
-          id: child.props.id,
-          value: child.props.value,
-          checked: child.props.checked || false,
-        },
-      }
-    }).reduce(
-      (acc, item) => ({
-        ...acc,
-        ...item,
-      }),
-      {}
-    ),
+    ...React.Children.map(children, (child) => ({
+      [child.props.name]: {
+        checked: false,
+      },
+    })).reduce((acc, item) => ({ ...acc, ...item }), {}),
   }
-
-  function fixState(oldState) {
-    return Object.entries(oldState).reduce(
-      (acc, [key, value]) => ({
-        ...acc,
-        [key]: {
-          ...value,
-          checked: false,
-        },
-      }),
-      {}
-    )
-  }
-
-  function reducer(state, action) {
-    const { payload, type } = action
-    switch (type) {
-      case 'CHANGE':
-        return {
-          ...fixState(state, payload),
-          [payload.name]: {
-            ...state[payload.name],
-            checked: payload.checked,
-          },
-        }
-      default:
-        throw new Error()
-    }
-  }
-  const [state, dispatch] = React.useReducer(reducer, initState)
-
+  const [checked, setChecked] = React.useState(initState)
   return (
     <fieldset className={className}>
       {legend && legend}
       {React.Children.map(children, (child) =>
         React.cloneElement(child, {
-          ...state[child.props.name],
-          onChange: (event) => {
-            dispatch({
-              type: 'CHANGE',
-              payload: {
-                name: event.target.name,
-                checked: event.target.checked,
-              },
-            })
+          ...checked[child.props.name].checked,
+          onChange: (ref) => () => {
+            setChecked((prev) => ({
+              ...prev,
+              [ref.current.name]: ref.current.checked,
+            }))
           },
         })
       )}
