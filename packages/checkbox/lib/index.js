@@ -3,19 +3,17 @@ const React = require('react')
 
 function Checkbox({ id, name, value, checked, onChange, children }) {
   return (
-    <React.Fragment>
-      <label htmlFor={id}>
-        <input
-          type="checkbox"
-          id={id}
-          name={name}
-          value={value}
-          checked={checked}
-          onChange={onChange}
-        />
-        {children}
-      </label>
-    </React.Fragment>
+    <label htmlFor={id}>
+      <input
+        type="checkbox"
+        id={id}
+        name={name}
+        value={value}
+        checked={checked}
+        onChange={onChange}
+      />
+      {children}
+    </label>
   )
 }
 
