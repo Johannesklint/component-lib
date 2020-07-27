@@ -21,6 +21,7 @@
   "dependencies": {
     "@library/input": "0.0.0",
     "@library/utils": "0.0.0",
+    "@library/radiogroup": "0.0.0",
     "@library/checkbox": "0.0.0"    
   },
   "devDependencies": {

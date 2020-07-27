@@ -2,6 +2,7 @@
 import React, { useReducer } from 'react'
 import Input from '@library/input'
 import { CheckboxGroup, Checkbox } from '@library/checkbox'
+import Radio from '@library/radiogroup'
 import { isFunction } from '@library/utils'
 
 function Button({ type, onClick, children, className }) {
@@ -66,6 +67,7 @@ function useAccordian(ids) {
 
 export default function Index() {
   const [toggle, setToggle] = useAccordian(['first', 'second'])
+  console.log('Radio', Radio)
   return (
     <>
       {/* <CheckboxGroup legend="legend">
