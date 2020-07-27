@@ -30,9 +30,13 @@ function CheckboxGroup({ className, legend, children }) {
   return (
     <fieldset className={className}>
       {legend && legend}
-      {React.Children.map(children, (child) =>
-        React.cloneElement(child, {
-          ...checked[child.props.name].checked,
+      {React.Children.map(children, (child) => {
+        const { name } = child.props
+        return React.cloneElement(child, {
+          ...checked[name].checked,
+          key: name,
+          name: name,
+          id: name,
           onChange: (ref) => () => {
             setChecked((prev) => ({
               ...prev,
@@ -40,7 +44,7 @@ function CheckboxGroup({ className, legend, children }) {
             }))
           },
         })
-      )}
+      })}
     </fieldset>
   )
 }
